@@ -91,9 +91,10 @@ def logout():
     resp.set_cookie('api_key', '', expires=0)
     return resp
 
-@app.route('/ping', methods=['GET'])
-def ping():
-    return jsonify('pong!')
+@app.route('/')
+def index():
+    print('index')
+    return app.send_static_file('index.html')
 
 if __name__ == '__main__':
     app.run()

@@ -18,7 +18,7 @@ app.use(apiKeyCheck)
 
 import axios from 'axios'
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5001/api',
+    baseURL: 'http://127.0.0.1:5000/api',
     withCredentials: true
 })
 app.config.globalProperties.$axios = axiosInstance
