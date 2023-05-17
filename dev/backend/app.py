@@ -35,13 +35,11 @@ def query_db(query, args=(), one=False):
             return rv
     return None
 
-def new_user():
-    name = "Unnamed User #" + ''.join(random.choices(string.digits, k=6))
-    password = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
+def new_user(username, password):
     api_key = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
     u = query_db('insert into users (name, password, api_key) ' + 
         'values (?, ?, ?) returning id, name, password, api_key',
-        (name, password, api_key),
+        (username, password, api_key),
         one=True)
     return u
 
@@ -63,9 +61,11 @@ def require_api_key(func):
     decorated_function.__name__ = func.__name__
     return decorated_function
 
-@app.route('/api/auth/signup', methods=['GET'])
+@app.route('/api/auth/signup', methods=['POST'])
 def signup():
-    user = new_user()
+    username = request.json.get('username')
+    password = request.json.get('password')
+    user = new_user(username, password)
     resp = make_response()
     resp.status = 201
     resp.set_cookie('api_key', user['api_key'])

@@ -1,6 +1,6 @@
 <template>
     <div class="login-page">
-        <h1>Login</h1>
+        <h1>Registration</h1>
         <form>
           <div class="form-outline mb-4">
             <input type="username" id="username" class="form-control" required/>
@@ -13,8 +13,7 @@
           <div class="form-outline mb-4">
             <small id="passwordError" class="form-text text-danger"></small>
           </div>
-          <button type="button" class="btn btn-primary btn-block mb-4" @click="login">Login</button>
-          <button type="button" class="btn btn-success btn-block mb-4">Sign up</button>
+          <button type="button" class="btn btn-success btn-block mb-4" @click="signup">Sign up</button>
         </form>
     </div>
 </template>
@@ -24,32 +23,28 @@ import axios from 'axios';
 
 export default {
   methods: {
-    login() {
+    signup() {
       // get the username and password
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       // call the login API
-      const path = 'http://localhost:5001/api/auth/login';
-      axios.post(path, {
+      const path = 'auth/signup';
+      this.$axios.post(path, {
         username,
         password,
       })
         .then((res) => {
-          // save the API key in the cookie
-          this.$cookies.set('apiKey', res.data.apiKey);
           this.$router.push('/');
         })
         .catch((error) => {
-          if (error.response.status === 401) {
-            document.getElementById('passwordError').innerHTML = 'Invalid username or password';
-          } else {
-            console.error(error);
-          }
+          console.error(error);
         });
     },
-    signup() {
-      this.$router.push('/signup');
-    },
+  },
+  created() {
+    if (this.$isApiKeyExistsInCookie()) {
+      this.$router.push('/');
+    }
   },
 };
 </script>

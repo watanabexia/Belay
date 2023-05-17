@@ -13,8 +13,8 @@
           <div class="form-outline mb-4">
             <small id="passwordError" class="form-text text-danger"></small>
           </div>
-          <button type="button" class="btn btn-primary btn-block mb-4" @click="login">Login</button>
-          <button type="button" class="btn btn-success btn-block mb-4">Sign up</button>
+          <button type="button" class="btn btn-primary btn-block mb-4 me-2" @click="login">Login</button>
+          <button type="button" class="btn btn-success btn-block mb-4" @click="signup">Sign up</button>
         </form>
     </div>
 </template>

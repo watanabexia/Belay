@@ -15,7 +15,7 @@ conda activate belay
 python -m pip install -r requirements.txt
 ```
 ## 2 Start the backend server
-⚠️: **the backend server must be started on port 5001**
+⚠️: **the backend server must be started on port 5000**
 ```
 conda activate belay
 cd backend
@@ -27,6 +27,8 @@ Have fun!
 # Attribution
 - `vue.js` + flask SPA development: https://testdriven.io/blog/developing-a-single-page-app-with-flask-and-vuejs/
 - flask backend code reference: https://github.com/UChicagoWebDev/student-ex-6-watanabexia
+
+# 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/n_2yaB5D)
 
 # Final Project: Belay (a Slack clone)
