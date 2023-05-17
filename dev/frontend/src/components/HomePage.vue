@@ -1,6 +1,5 @@
 <template>
   <div class="home-page">
-    <h1>Belay</h1>
     <p>Welcome to Belay! Your next Slack is not slack, but belay ;)</p>
     <div class="btn-group login">
       <button class="btn btn-primary" @click="login">Login</button>
@@ -23,6 +22,8 @@ export default {
   created() {
     if (this.$isApiKeyExistsInCookie()) {
       this.$router.push("/dashboard");
+    } else {
+      this.$emit('update:current_title', 'Welcome');
     }
   },
 };

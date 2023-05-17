@@ -1,9 +1,9 @@
 <template>
   <div class="home-page">
-    <h1>Belay Dashboard</h1>
     <p>Welcome back,</p>
   </div>
   <div class="btn-group login">
+    <button class="btn btn-primary" @click="profile">profile</button>
     <button class="btn btn-danger" @click="logout">Logout</button>
   </div>
 </template>
@@ -12,6 +12,9 @@
 export default {
   name: "Dashboard",
   methods: {
+    profile() {
+      this.$router.push("/profile");
+    },
     logout() {
       const path = "auth/logout";
       this.$axios.post(path)
@@ -26,6 +29,8 @@ export default {
   created() {
     if (!this.$isApiKeyExistsInCookie()) {
       this.$router.push("/login");
+    } else {
+      this.$emit('update:current_title', 'Dashboard');
     }
   },
 };

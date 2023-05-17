@@ -1,6 +1,5 @@
 <template>
     <div class="login-page">
-        <h1>Registration</h1>
         <form>
           <div class="form-outline mb-4">
             <input type="username" id="username" class="form-control" required/>
@@ -44,6 +43,8 @@ export default {
   created() {
     if (this.$isApiKeyExistsInCookie()) {
       this.$router.push('/');
+    } else {
+      this.$emit('update:current_title', 'Registration');
     }
   },
 };
