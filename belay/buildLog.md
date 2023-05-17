@@ -25,3 +25,7 @@ npm install axios@1.3.6 --save
 ```
 npm install bootstrap@5.2.3 --save
 ```
+## 5 install `vue3-cookies`
+```
+npm install vue3-cookies --save
+```

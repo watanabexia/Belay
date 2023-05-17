@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Ping from '../components/Ping.vue'
 import HomePage from '../components/HomePage.vue'
 import LoginPage from '../components/LoginPage.vue'
+import SignupPage from '../components/SignupPage.vue'
+import Dashboard from '../components/Dashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,9 +18,14 @@ const router = createRouter({
       component: LoginPage
     },
     {
-      path: '/ping',
-      name: 'Ping',
-      component: Ping
+      path: '/signup',
+      name: 'Signup',
+      component: SignupPage
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     }
   ]
 })

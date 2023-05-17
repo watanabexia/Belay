@@ -1,42 +1,57 @@
 <template>
     <div class="login-page">
         <h1>Login</h1>
-        <form @submit.prevent="submitForm">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" v-model="email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" v-model="password" required>
-        </div>
-        <button type="submit">Login</button>
+        <form>
+          <div class="form-outline mb-4">
+            <input type="username" id="username" class="form-control" required/>
+            <label class="form-label" for="username">Username</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input type="password" id="password" class="form-control" required/>
+            <label class="form-label" for="password">Password</label>
+          </div>
+          <div class="form-outline mb-4">
+            <small id="passwordError" class="form-text text-danger"></small>
+          </div>
+          <button type="button" class="btn btn-primary btn-block mb-4" @click="login">Login</button>
+          <button type="button" class="btn btn-success btn-block mb-4">Sign up</button>
         </form>
     </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-    };
-  },
-  methods: {
-    submitForm() {
-      // Perform login logic, e.g., make API call or check credentials
-      if (this.email === 'user@example.com' && this.password === 'password') {
-        // Login successful
-        console.log('Login successful');
-        // Redirect to the home page or perform any other action
-        this.$router.push('/home');
-      } else {
-        // Login failed
-        console.log('Login failed');
-        // Display an error message or perform any other action
+  import axios from 'axios';
+  export default {
+    methods: {
+      login() {
+        // get the username and password
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        // call the login API
+        const path = 'auth/login';
+        this.$axios.post(path, {
+          username,
+          password,
+        })
+          .then((res) => {
+            this.$router.push('/');
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              document.getElementById('passwordError').innerHTML = 'Invalid username or password';
+            } else {
+              console.error(error);
+            }
+          });
+      },
+      signup() {
+        this.$router.push('/signup');
       }
     },
-  },
-};
+    created() {
+      if (this.$isApiKeyExistsInCookie()) {
+        this.$router.push('/');
+      }
+    },
+  };
 </script>

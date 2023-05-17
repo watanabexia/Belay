@@ -22,12 +22,14 @@ python -m pip install flask-cors==3.0.10
 https://nodejs.org/
 ## 3 Start the backend server
 ```
+conda activate belay
 cd backend
 flask run --reload --port=5001
 ```
 ## 4 Start the frontend server
 ```
 cd belay
+npm install
 npm run dev
 ```
 ## 5 Access Belay at the frontend server URL as shown in the terminal
@@ -35,3 +37,4 @@ Have fun!
 
 # Attribution
 - `vue.js` + flask SPA development: https://testdriven.io/blog/developing-a-single-page-app-with-flask-and-vuejs/
+- flask backend code reference: https://github.com/UChicagoWebDev/student-ex-6-watanabexia
