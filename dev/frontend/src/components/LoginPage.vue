@@ -32,6 +32,9 @@
           password,
         })
           .then((res) => {
+            document.getElementById('passwordError').innerHTML = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
             this.$router.push('/');
           })
           .catch((error) => {

@@ -1,10 +1,10 @@
 <template>
   <div class="home-page">
-    <p>Welcome back,</p>
-  </div>
-  <div class="btn-group login">
-    <button class="btn btn-primary" @click="profile">profile</button>
-    <button class="btn btn-danger" @click="logout">Logout</button>
+    <p>Welcome back!</p>
+    <div class="btn-group login">
+      <button class="btn btn-primary" @click="profile">profile</button>
+      <button class="btn btn-danger" @click="logout">Logout</button>
+    </div>
   </div>
 </template>
 

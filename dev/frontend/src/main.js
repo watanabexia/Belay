@@ -13,14 +13,7 @@ const app = createApp(App)
 app.use(router)
 app.use(VueCookies)
 
-import apiKeyCheck from './plugins/apiKeyCheck.js'
-app.use(apiKeyCheck)
-
-import axios from 'axios'
-const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:5000/api',
-    withCredentials: true
-})
-app.config.globalProperties.$axios = axiosInstance
+import utilities from './plugins/utilities.js'
+app.use(utilities)
 
 app.mount('#app')

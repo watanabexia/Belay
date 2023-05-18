@@ -45,9 +45,6 @@ def new_user(username, password):
 
 def require_api_key(func):
     def decorated_function(*args, **kwargs):
-
-        print(request.cookies)
-
         api_key = request.cookies.get('api_key')
         if not api_key:
             return jsonify({'error': 'No api_key found'}), 401
@@ -90,6 +87,32 @@ def logout():
     resp.status = 200
     resp.set_cookie('api_key', '', expires=0)
     return resp
+
+@app.route('/api/users/me', methods=['GET'])
+@require_api_key
+def me():
+    api_key = request.cookies.get('api_key')
+    user = query_db('select * from users where api_key = ?', (api_key,), one=True)
+    return jsonify({'username': user['name']}), 200
+
+@app.route('/api/users/username/update', methods=['PUT'])
+@require_api_key
+def update_username():
+    api_key = request.cookies.get('api_key')
+    user = query_db('select * from users where api_key = ?', (api_key,), one=True)
+    new_username = request.json.get('username')
+    query_db('update users set name = ? where id = ?', (new_username, user['id']))
+    return jsonify({'username': new_username}), 200
+
+@app.route('/api/users/password/update', methods=['PUT'])
+@require_api_key
+def update_password():
+    api_key = request.cookies.get('api_key')
+    user = query_db('select * from users where api_key = ?', (api_key,), one=True)
+    new_password = request.json.get('password')
+    query_db('update users set password = ? where id = ?', (new_password, user['id']))
+    return jsonify({'password': new_password}), 200
+
 
 @app.route('/')
 def index():
