@@ -15,7 +15,7 @@ create table messages (
   reply_to INTEGER,
   user_id INTEGER,
   channel_id INTEGER,
-  body TEXT,
+  message TEXT,
   FOREIGN KEY(user_id) REFERENCES users(id),
   FOREIGN KEY(channel_id) REFERENCES channels(id),
   FOREIGN KEY(reply_to) REFERENCES messages(id)
@@ -30,7 +30,7 @@ create table reactions (
   FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-create table last_seen_messages (
+create table last_read_messages (
   user_id INTEGER,
   channel_id INTEGER,
   message_id INTEGER,
