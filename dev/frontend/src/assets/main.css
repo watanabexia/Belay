@@ -1,31 +1,10 @@
 @import "./base.css";
 
-/* Custom styles for the layout */
-.channel-list {
-  overflow-y: auto;
-  max-height: calc(100vh - 56px); /* Adjust the height to leave space for the menu bar */
-}
-
-.messages-column {
-  overflow-y: auto;
-  max-height: calc(100vh - 56px); /* Adjust the height to leave space for the menu bar */
-}
-
-.thread-column {
-  overflow-y: auto;
-  max-height: calc(100vh - 56px); /* Adjust the height to leave space for the menu bar */
-}
-
-@media (max-width: 767.98px) { /* Narrow screen styles */
-  .channel-list {
-    display: none;
-  }
-  
-  .thread-column {
-    display: none;
-  }
-  
-  .messages-column {
-    max-height: calc(100vh - 106px); /* Adjust the height to leave space for the menu bar and back button */
-  }
+.unread-count {
+  background-color: #ff5555;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-left: 5px;
 }

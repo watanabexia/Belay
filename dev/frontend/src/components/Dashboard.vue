@@ -12,11 +12,12 @@
   </div>
   <!-- Channel List -->
   <div class="p-3 channel-list">
-    <ChannelBanner @click="$event => navigateToChannel(channel)" v-for="channel in channels" :ChannelName="channel.name" :isSelect="channel.id == $route.params.channelId" />
+    <ChannelBanner @click="$event => navigateToChannel(channel)" v-for="channel in channels" :ChannelName="channel.name" :isSelect="channel.id == $route.params.channelId" :unreadCount="channel.unreadCount" />
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import ChannelBanner from "./ChannelBanner.vue";
 export default {
   name: "Dashboard",
@@ -24,6 +25,7 @@ export default {
     return {
       channels: [],
       interval: null,
+      channel_ids: [],
     }
   },
   methods: {
@@ -53,7 +55,18 @@ export default {
       const path = "channels/all";
       this.$axios.get(path)
         .then((res) => {
-          this.channels = res.data;
+          if (this.channels.length != res.data.length) {
+            this.channels = res.data;
+          }
+          for (let i = 0; i < this.channels.length; i++) {
+            let channel = this.channels[i];
+            channel.name = res.data[i].name
+            let path = "channels/" + channel.id + "/unread";
+              this.$axios.get(path)
+              .then ((res) => {
+                channel['unreadCount'] = res.data['unread_count']
+              })
+          }
         })
         .catch((error) => {
           console.error(error);

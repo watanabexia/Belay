@@ -110,7 +110,7 @@ def logout():
 def me():
     api_key = request.cookies.get('api_key')
     user = query_db('select * from users where api_key = ?', (api_key,), one=True)
-    return jsonify({'username': user['name']}), 200
+    return jsonify({'username': user['name'], 'user_id': user['id']}), 200
 
 @app.route('/api/users/username/update', methods=['PUT'])
 @require_api_key
@@ -155,6 +155,16 @@ def get_channels():
 @require_api_key
 def get_messages(channel_id):
     messages = query_db('select * from messages where channel_id = ?', (channel_id,))
+    if not messages:
+        return jsonify([]), 200
+
+    messages.sort(key=lambda message: message['id'], reverse=True)
+    messages = [dict(message) for message in messages]
+
+    for message in messages:
+        user = query_db('select * from users where id = ?', (message['user_id'],), one=True)
+        message['username'] = user['name']
+
     return jsonify([dict(message) for message in messages]), 200
 
 @app.route('/api/channels/<int:channel_id>/messages/create', methods=['POST'])
@@ -168,7 +178,7 @@ def create_message(channel_id):
 
 # Messages
 
-@app.route('/api//messages/<int:message_id>/reply', methods=['POST'])
+@app.route('/api/messages/<int:message_id>/reply', methods=['POST'])
 @require_api_key
 def reply_message(message_id):
     api_key = request.cookies.get('api_key')
@@ -202,24 +212,29 @@ def get_reactions(message_id):
 
 # Last Read
 
-@app.route('/api/users/<int:user_id>/channels/<int:channel_id>/last', methods=['POST'])
+@app.route('/api/channels/<int:channel_id>/last', methods=['POST'])
 @require_api_key
-def update_last_read(user_id, channel_id):
+def update_last_read(channel_id):
+    api_key = request.cookies.get('api_key')
+    user_id = query_db('select * from users where api_key = ?', (api_key,), one=True)['id']
     message_id = request.json.get('message_id')
-    query_db('insert into last_read_messages (user_id, channel_id, message_id) values (?, ?, ?)', (user_id, channel_id, message_id))
+    query_db('update last_read_messages set message_id = ? where user_id = ? and channel_id = ?', (message_id, user_id, channel_id))
     return jsonify({'message_id': message_id}), 201
 
-@app.route('/api/users/<int:user_id>/channels/<int:channel_id>/last', methods=['GET'])
+@app.route('/api/channels/<int:channel_id>/last', methods=['GET'])
 @require_api_key
-def get_last_read(user_id, channel_id):
+def get_last_read(channel_id):
+    api_key = request.cookies.get('api_key')
+    user_id = query_db('select * from users where api_key = ?', (api_key,), one=True)['id']
     last_read_message = query_db('select * from last_read_messages where user_id = ? and channel_id = ?', (user_id, channel_id), one=True)
     return jsonify({'message_id': last_read_message['message_id']}), 200
 
-@app.route('/api/users/<int:user_id>/channels/<int:channel_id>/unread', methods=['GET'])
+@app.route('/api/channels/<int:channel_id>/unread', methods=['GET'])
 @require_api_key
-def get_unread_count(user_id, channel_id):
+def get_unread_count(channel_id):
+    api_key = request.cookies.get('api_key')
     # YOU MUST USE ONLY ONE QUERY
-    unread_count = query_db('select count(*) from messages where channel_id = ? and id > (select message_id from last_read_messages where user_id = ? and channel_id = ?)', (channel_id, user_id, channel_id), one=True)
+    unread_count = query_db('select count(*) from messages where channel_id = ? and id > (select message_id from last_read_messages where user_id = (select id from users where api_key = ?) and channel_id = ?)', (channel_id, api_key, channel_id), one=True)
     return jsonify({'unread_count': unread_count[0]}), 200
 
 

@@ -1,7 +1,7 @@
 <template>
     <div class="channel-banner pb-3">
-        <button class="btn btn-secondary" v-if="!isSelect">{{ ChannelName }}</button>
-        <button class="btn btn-primary" v-else>{{ ChannelName }}</button>
+        <button class="btn btn-secondary" v-if="!isSelect">{{ ChannelName }} <span class="unread-count" v-if="unreadCount > 0">{{ unreadCount }}</span> </button>
+        <button class="btn btn-primary" v-else>{{ ChannelName }} <span class="unread-count" v-if="unreadCount > 0">{{ unreadCount }}</span> </button>
     </div>
 </template>
 
@@ -16,6 +16,10 @@ export default {
         isSelect: {
             type: Boolean,
             default: false,
+        },
+        unreadCount: {
+            type: Number,
+            default: 0,
         },
     },
 };

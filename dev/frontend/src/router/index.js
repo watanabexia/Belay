@@ -35,7 +35,6 @@ const router = createRouter({
       name: 'Dashboard',
       components: {
         LeftSidebar: Dashboard,
-        MainContent: MessagePage,
       }
     },
     {
