@@ -1,21 +1,21 @@
 <template>
-    <div class="login-page">
-        <form>
-          <div class="form-outline mb-4">
-            <input type="username" id="username" class="form-control" required/>
-            <label class="form-label" for="username">Username</label>
-          </div>
-          <div class="form-outline mb-4">
-            <input type="password" id="password" class="form-control" required/>
-            <label class="form-label" for="password">Password</label>
-          </div>
-          <div class="form-outline mb-4">
-            <small id="passwordError" class="form-text text-danger"></small>
-          </div>
-          <button type="button" class="btn btn-primary btn-block mb-4 me-2" @click="login">Login</button>
-          <button type="button" class="btn btn-success btn-block mb-4" @click="signup">Sign up</button>
-        </form>
+<div class="p-3">
+  <form>
+    <div class="form-outline mb-4">
+      <input type="username" id="username" class="form-control" required/>
+      <label class="form-label" for="username">Username</label>
     </div>
+    <div class="form-outline mb-4">
+      <input type="password" id="password" class="form-control" required/>
+      <label class="form-label" for="password">Password</label>
+    </div>
+    <button type="button" class="btn btn-primary btn-block mb-4 me-2" @click="login">Login</button>
+    <button type="button" class="btn btn-success btn-block mb-4" @click="signup">Sign up</button>
+    <div class="form-outline mb-4">
+      <small id="passwordError" class="form-text text-danger"></small>
+    </div>
+  </form>
+</div>
 </template>
 
 <script>

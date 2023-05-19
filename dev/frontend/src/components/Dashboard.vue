@@ -1,10 +1,15 @@
 <template>
-  <div class="home-page">
+  <!-- Wide Screen Layout -->
+  <div class="p-3">
     <p>Welcome back!</p>
     <div class="btn-group login">
       <button class="btn btn-primary" @click="profile">profile</button>
       <button class="btn btn-danger" @click="logout">Logout</button>
     </div>
+  </div>
+  <!-- Channel List -->
+  <div class="p-3 channel-list">
+    <!-- Channel List content goes here -->
   </div>
 </template>
 

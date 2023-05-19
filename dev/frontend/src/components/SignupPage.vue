@@ -1,5 +1,5 @@
 <template>
-    <div class="login-page">
+    <div class="p-3">
         <form>
           <div class="form-outline mb-4">
             <input type="username" id="username" class="form-control" required/>

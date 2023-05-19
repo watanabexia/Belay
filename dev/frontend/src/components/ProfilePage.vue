@@ -1,6 +1,6 @@
 <template>
-  <div class="home-page">
-    <form class="me-4">
+  <div class="p-3">
+    <form>
     <div class="form-outline mb-4">
       <input type="username" id="username" class="form-control" :value="username"/>
       <label class="form-label" for="username">Username</label>

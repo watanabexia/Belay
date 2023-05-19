@@ -74,8 +74,9 @@ def signup():
     user = new_user(username, password)
 
     channels = query_db('select * from channels')
-    for channel in channels:
-        query_db('insert into last_read_messages (user_id, channel_id, message_id) values (?, ?, ?)', (user['id'], channel['id'], 0))
+    if channels:
+        for channel in channels:
+            query_db('insert into last_read_messages (user_id, channel_id, message_id) values (?, ?, ?)', (user['id'], channel['id'], 0))
 
     resp = make_response()
     resp.status = 201

@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="p-3">
     <p>Welcome to Belay! Your next Slack is not slack, but belay ;)</p>
     <div class="btn-group login">
       <button class="btn btn-primary" @click="login">Login</button>

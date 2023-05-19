@@ -4,6 +4,7 @@ import LoginPage from '../components/LoginPage.vue'
 import SignupPage from '../components/SignupPage.vue'
 import Dashboard from '../components/Dashboard.vue'
 import ProfilePage from '../components/ProfilePage.vue'
+import MessagePage from '../components/MessagePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,27 +12,38 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: HomePage
+      components: {
+        LeftSidebar: HomePage,
+      }
     },
     {
       path: '/login',
       name: 'Login',
-      component: LoginPage
+      components: {
+        LeftSidebar: LoginPage,
+      }
     },
     {
       path: '/signup',
       name: 'Signup',
-      component: SignupPage
+      components: {
+        LeftSidebar: SignupPage,
+      }
     },
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard
+      components: {
+        LeftSidebar: Dashboard,
+        MainContent: MessagePage,
+      }
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: ProfilePage
+      components: {
+        LeftSidebar: ProfilePage,
+      }
     }
   ]
 })
