@@ -1,7 +1,6 @@
 <template>
 <div class="p-3">
     <h1 class="display-1">Belay</h1>
-    <h1>{{ title }}</h1>
 </div>
 </template>
 

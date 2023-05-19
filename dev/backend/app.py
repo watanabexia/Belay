@@ -135,7 +135,7 @@ def update_password():
 @app.route('/api/channels/create', methods=['POST'])
 @require_api_key
 def create_channel():
-    channel_name = request.json.get('channel_name')
+    channel_name = "Channel #" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
     query_db('insert into channels (name) values (?)', (channel_name,))
 
     channel = query_db('select * from channels where name = ?', (channel_name,), one=True)

@@ -13,21 +13,21 @@ const router = createRouter({
       path: '/',
       name: 'Home',
       components: {
-        LeftSidebar: HomePage,
+        MainContent: HomePage,
       }
     },
     {
       path: '/login',
       name: 'Login',
       components: {
-        LeftSidebar: LoginPage,
+        MainContent: LoginPage,
       }
     },
     {
       path: '/signup',
       name: 'Signup',
       components: {
-        LeftSidebar: SignupPage,
+        MainContent: SignupPage,
       }
     },
     {
@@ -42,7 +42,16 @@ const router = createRouter({
       path: '/profile',
       name: 'Profile',
       components: {
-        LeftSidebar: ProfilePage,
+        LeftSidebar: Dashboard,
+        MainContent: ProfilePage,
+      }
+    },
+    {
+      path: `/channel/:channelId`,
+      name: 'Channel',
+      components: {
+        LeftSidebar: Dashboard,
+        MainContent: MessagePage,
       }
     }
   ]

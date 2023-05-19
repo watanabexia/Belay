@@ -1,5 +1,22 @@
 <template>
-    <div class="p-3">
+    <div class="p-3 m-5 col-lg d-none d-lg-block">
+        <form>
+          <div class="form-outline mb-4">
+            <input type="username" id="username" class="form-control" required/>
+            <label class="form-label" for="username">Username</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input type="password" id="password" class="form-control" required/>
+            <label class="form-label" for="password">Password</label>
+          </div>
+          <div class="form-outline mb-4">
+            <small id="passwordError" class="form-text text-danger"></small>
+          </div>
+          <button type="button" class="btn btn-success btn-block mb-4" @click="signup">Sign up</button>
+        </form>
+    </div>
+
+    <div class="p-3 d-lg-none">
         <form>
           <div class="form-outline mb-4">
             <input type="username" id="username" class="form-control" required/>
