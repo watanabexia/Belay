@@ -1,6 +1,6 @@
 <template>
   <!-- Wide Screen Layout -->
-  <div class="container-fluid d-none d-lg-block">
+  <div class="container-fluid d-none d-lg-block" v-if="isWideScreen">
     <div class="row">
       <div class="col-lg-3">
         <Banner @click="home"/>
@@ -12,7 +12,7 @@
   </div>
 
   <!-- Narrow Screen Layout -->
-  <div class="container-fluid d-lg-none">
+  <div class="container-fluid d-lg-none" v-else>
     <div class="row">
       <div class="col">
         <Banner @click="home"/>
@@ -40,6 +40,7 @@ export default {
     return {
       current_title: 'Belay',
       showChannelList: false,
+      isWideScreen: window.innerWidth > 992,
     }
   },
   methods: {
@@ -49,6 +50,12 @@ export default {
     toggleChannelList() {
       this.showChannelList = !this.showChannelList;
     },
+    handleResize() {
+      this.isWideScreen = window.innerWidth > 992;
+    }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
   },
 }
 </script>

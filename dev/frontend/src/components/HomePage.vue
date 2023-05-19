@@ -1,13 +1,5 @@
 <template>
-  <div class="p-3 m-5 col-lg d-none d-lg-block">
-    <p>Welcome to Belay! Your next Slack is not slack, but belay ;)</p>
-    <div class="btn-group login">
-      <button class="btn btn-primary" @click="login">Login</button>
-      <button class="btn btn-success" @click="signup">Sign Up</button>
-    </div>
-  </div>
-
-  <div class="p-3 d-lg-none">
+  <div class="p-3 m-5 col-lg">
     <p>Welcome to Belay! Your next Slack is not slack, but belay ;)</p>
     <div class="btn-group login">
       <button class="btn btn-primary" @click="login">Login</button>

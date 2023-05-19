@@ -135,7 +135,7 @@ def update_password():
 @app.route('/api/channels/create', methods=['POST'])
 @require_api_key
 def create_channel():
-    channel_name = "Channel #" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+    channel_name = request.json.get('channel_name')
     query_db('insert into channels (name) values (?)', (channel_name,))
 
     channel = query_db('select * from channels where name = ?', (channel_name,), one=True)
@@ -150,6 +150,12 @@ def create_channel():
 def get_channels():
     channels = query_db('select * from channels')
     return jsonify([dict(channel) for channel in channels]), 200
+
+@app.route('/api/channels/<int:channel_id>/delete', methods=['POST'])
+@require_api_key
+def delete_channel(channel_id):
+    query_db('delete from channels where id = ?', (channel_id,))
+    return jsonify({'channel_id': channel_id}), 200
 
 @app.route('/api/channels/<int:channel_id>/messages', methods=['GET'])
 @require_api_key

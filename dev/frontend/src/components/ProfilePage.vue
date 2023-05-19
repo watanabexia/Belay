@@ -1,28 +1,5 @@
 <template>
-  <div class="p-3 m-5 col-lg d-none d-lg-block">
-    <form>
-    <div class="form-outline mb-4">
-      <input type="username" id="username" class="form-control" :value="username"/>
-      <label class="form-label" for="username">Username</label>
-    </div>
-    <button type="button" class="btn btn-primary btn-block mb-4 me-2" @click="updateUsername">Update Username</button>
-    <div class="form-outline mb-4">
-      <small id="usernameUpdateSuccess" class="form-text text-primary"></small>
-    </div>
-    </form>
-    <form>
-      <div class="form-outline mb-4">
-        <input type="password" id="password" class="form-control"/>
-        <label class="form-label" for="password">Password</label>
-      </div>
-      <button type="button" class="btn btn-danger btn-block mb-4" @click="updatePassword">Update Password</button>
-      <div class="form-outline mb-4">
-        <small id="passwordUpdateSuccess" class="form-text text-danger"></small>
-      </div>
-    </form>
-  </div>
-
-  <div class="p-3 d-lg-none">
+  <div class="p-3 m-5 col-lg">
     <form>
     <div class="form-outline mb-4">
       <input type="username" id="username" class="form-control" :value="username"/>

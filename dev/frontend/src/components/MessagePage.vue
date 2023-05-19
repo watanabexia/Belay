@@ -4,6 +4,9 @@
           <input type="text" class="form-control" id="message" placeholder="Message" aria-label="Message" aria-describedby="basic-addon1">
           <button type="button" class="btn btn-primary" @click="sendMessage">Send</button>
         </div>
+        <div class="p-3">
+          <button type="button" class="btn btn-danger" @click="deleteChannel">Delete Channel</button>
+        </div>
         <div class="row p-3 messages-column">
           <template v-for="message in messages" >
             <MessageBox v-if="message.reply_to==null" :message="message" @showThread="showThread" />
@@ -59,6 +62,16 @@ export default {
             })
                 .then((res) => {
                     document.getElementById('message').value = '';
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        deleteChannel() {
+            const path = 'channels/' + this.$route.params.channelId + '/delete';
+            this.$axios.post(path)
+                .then((res) => {
+                    this.$router.push('/dashboard');
                 })
                 .catch((error) => {
                     console.error(error);
