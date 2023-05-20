@@ -159,6 +159,8 @@ def get_channels():
 @require_api_key
 def get_channel(channel_id):
     channel = query_db('select * from channels where id = ?', (channel_id,), one=True)
+    if not channel:
+        return jsonify({'error': 'The channel with the id does not exist'}), 404
     return jsonify(dict(channel)), 200
 
 @app.route('/api/channels/<int:channel_id>/delete', methods=['POST'])
@@ -198,6 +200,17 @@ def create_message(channel_id):
     return jsonify({'message': message}), 201
 
 # Messages
+
+@app.route('/api/messages/<int:message_id>', methods=['GET'])
+@require_api_key
+def get_message(message_id):
+    message = query_db('select * from messages where id = ?', (message_id,), one=True)
+    if not message:
+        return jsonify({'error': 'The message with the id does not exist'}), 404
+    message = dict(message)
+    user = query_db('select * from users where id = ?', (message['user_id'],), one=True)
+    message['username'] = user['name']
+    return jsonify(dict(message)), 200
 
 @app.route('/api/messages/<int:message_id>/reply', methods=['POST'])
 @require_api_key

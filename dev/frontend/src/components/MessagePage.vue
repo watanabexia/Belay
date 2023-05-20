@@ -12,8 +12,8 @@
             <template v-if="message.reply_to==null" >
                 <MessageBox :message="message" />
                 <div class="mb-3">
-                    <button v-if="message.reply_count == 0" type="button" class="btn btn-secondary" @click="showThread(message)">Reply</button>
-                    <button v-else type="button" class="btn btn-secondary" @click="showThread(message)">{{message.reply_count}} replies</button>
+                    <button v-if="message.reply_count == 0" type="button" class="btn btn-secondary" @click="() => {goToThread(message.id); showThread(message)}">Reply</button>
+                    <button v-else type="button" class="btn btn-secondary" @click="() => {goToThread(message.id); showThread(message)}">{{message.reply_count}} replies</button>
                 </div>
             </template>
           </template>
@@ -96,12 +96,16 @@ export default {
                     console.error(error);
                 });
         },
+        goToThread(message_id) {
+            this.$router.push('/channel/' + this.$route.params.channelId + '/thread/' + message_id);
+        },
         showThread(message) {
             this.threadMessage = message;
             this.IsShowThread = true;
         },
         hideThread() {
             this.IsShowThread = false;
+            this.$router.push('/channel/' + this.$route.params.channelId);
         },
         updateTitle() {
             let path = 'channels/' + this.$route.params.channelId;
@@ -110,7 +114,9 @@ export default {
                     this.$emit('update:current_title', res.data.name);
                 })
                 .catch((error) => {
-                    console.error(error);
+                    if (error.response.status == 404) {
+                        this.$router.push('/dashboard');
+                    }
                 });
         },
         sendReply() {
@@ -166,8 +172,25 @@ export default {
     created() {
         if (!this.$isApiKeyExistsInCookie()) {
         } else {
+
+
             this.updateTitle();
             window.addEventListener('resize', this.handleResize);
+
+            if (this.$route.params.messageId != null) {
+                let path = '/messages/' + this.$route.params.messageId;
+                this.$axios.get(path)
+                    .then((res) => {
+                        if (res.data.reply_to != null) {
+                            this.$router.push('/channel/' + this.$route.params.channelId);
+                        } else {
+                            this.showThread(res.data);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            }
         }
     },
 };

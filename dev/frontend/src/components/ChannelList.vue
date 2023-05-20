@@ -70,7 +70,11 @@ export default {
     navigateToChannel(channel) {
       this.$emit('toggleChannelList');
       this.$emit('update:current_title', channel.name);
-      this.$router.push(`/channel/${channel.id}`);
+      if (this.$route.params.messageId != null) {
+        this.$router.push(`/channel/${channel.id}/thread/${this.$route.params.messageId}`);
+      } else {
+        this.$router.push(`/channel/${channel.id}`);
+      }
     },
   },
   components: {

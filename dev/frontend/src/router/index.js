@@ -54,6 +54,14 @@ const router = createRouter({
         LeftSidebar: ChannelList,
         MainContent: MessagePage,
       }
+    },
+    {
+      path: `/channel/:channelId/thread/:messageId`,
+      name: 'Thread',
+      components: {
+        LeftSidebar: ChannelList,
+        MainContent: MessagePage,
+      }
     }
   ]
 })
