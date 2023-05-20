@@ -53,15 +53,15 @@ export default {
           if (this.channels.length != res.data.length) {
             this.channels = res.data;
           }
-          for (let i = 0; i < this.channels.length; i++) {
-            let channel = this.channels[i];
-            channel.name = res.data[i].name
-            let path = "channels/" + channel.id + "/unread";
-              this.$axios.get(path)
-              .then ((res) => {
-                channel['unreadCount'] = res.data['unread_count']
-              })
-          }
+
+          let path = "channels/unread";
+          this.$axios.get(path)
+          .then ((res) => {
+            for (let i = 0; i < this.channels.length; i++) {
+              let channel = this.channels[i];
+              channel['unreadCount'] = res.data[channel.id]
+            }
+          })
         })
         .catch((error) => {
           console.error(error);

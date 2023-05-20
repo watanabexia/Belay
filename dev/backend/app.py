@@ -273,6 +273,21 @@ def get_last_read(channel_id):
     last_read_message = query_db('select * from last_read_messages where user_id = ? and channel_id = ?', (user_id, channel_id), one=True)
     return jsonify({'message_id': last_read_message['message_id']}), 200
 
+@app.route('/api/channels/unread', methods=['GET'])
+@require_api_key
+def get_unread_counts():
+    api_key = request.cookies.get('api_key')
+    user_id = query_db('select * from users where api_key = ?', (api_key,), one=True)['id']
+    unread_counts_raw = query_db('select channel_id, count(*) from messages where id > (select message_id from last_read_messages where user_id = ? and channel_id = messages.channel_id) group by channel_id', (user_id,))
+    
+    unread_counts = dict()
+    
+    if unread_counts_raw:
+        for unread_count in unread_counts_raw:
+            unread_counts[unread_count[0]] = unread_count[1]
+
+    return jsonify(unread_counts), 200
+
 @app.route('/api/channels/<int:channel_id>/unread', methods=['GET'])
 @require_api_key
 def get_unread_count(channel_id):
