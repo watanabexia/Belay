@@ -151,6 +151,12 @@ def get_channels():
     channels = query_db('select * from channels')
     return jsonify([dict(channel) for channel in channels]), 200
 
+@app.route('/api/channels/<int:channel_id>', methods=['GET'])
+@require_api_key
+def get_channel(channel_id):
+    channel = query_db('select * from channels where id = ?', (channel_id,), one=True)
+    return jsonify(dict(channel)), 200
+
 @app.route('/api/channels/<int:channel_id>/delete', methods=['POST'])
 @require_api_key
 def delete_channel(channel_id):

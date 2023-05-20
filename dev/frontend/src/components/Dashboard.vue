@@ -1,5 +1,4 @@
 <template>
-  <!-- Wide Screen Layout -->
   <div class="col-lg-3 p-5">
     <p>Welcome back!</p>
     <div class="btn-group login">
@@ -45,12 +44,10 @@ export default {
       this.$emit('update:current_title', 'Dashboard');
     }
   },
-  unmounted() {
-    clearInterval(this.interval);
-  },
   created() {
     if (!this.$isApiKeyExistsInCookie()) {
       this.$router.push("/login");
+    } else {
     }
   },
 };

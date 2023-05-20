@@ -9,11 +9,14 @@
         </div>
         <div class="row p-3 messages-column">
           <template v-for="message in messages" >
-            <MessageBox v-if="message.reply_to==null" :message="message" @showThread="showThread" />
+            <MessageBox v-if="message.reply_to==null" :message="message" />
+            <div class="mb-3">
+                <button type="button" class="btn btn-secondary" @click="showThread">Reply</button>
+            </div>
           </template>
         </div>
     </div>
-    <div class="col-lg-3" :class="{'d-none':!showThread}">
+    <div class="col-lg-3" :class="{'d-none':!IsShowThread}">
       <div class="p-3 thread-column">
         <!-- Thread Column content goes here -->
       </div>
@@ -28,7 +31,7 @@ export default {
         return {
           messages: [],
           messageInterval: null,
-          showThread: false,
+          IsShowThread: false,
         };
     },
     methods: {
@@ -78,14 +81,29 @@ export default {
                 });
         },
         showThread() {
-            this.showThread = true;
+            this.IsShowThread = true;
         },
         hideThread() {
-            this.showThread = false;
+            this.IsShowThread = false;
+        },
+        updateTitle() {
+            let path = 'channels/' + this.$route.params.channelId;
+            this.$axios.get(path)
+                .then((res) => {
+                    this.$emit('update:current_title', res.data.name);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
     },
     components: {
         MessageBox,
+    },
+    watch: {
+        '$route.params.channelId': function() {
+            this.updateTitle();
+        },
     },
     mounted() {
         if (!this.$isApiKeyExistsInCookie()) {
@@ -97,6 +115,12 @@ export default {
     },
     unmounted() {
         clearInterval(this.messageInterval);
+    },
+    created() {
+        if (!this.$isApiKeyExistsInCookie()) {
+        } else {
+            this.updateTitle();
+        }
     },
 };
 </script>

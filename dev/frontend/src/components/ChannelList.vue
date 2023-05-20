@@ -68,8 +68,8 @@ export default {
         });
     },
     navigateToChannel(channel) {
-      this.$emit('update:current_title', channel.name);
       this.$emit('toggleChannelList');
+      this.$emit('update:current_title', channel.name);
       this.$router.push(`/channel/${channel.id}`);
     },
   },
@@ -79,7 +79,6 @@ export default {
   mounted() {
     if (!this.$isApiKeyExistsInCookie()) {
     } else {
-      this.$emit('update:current_title', 'Dashboard');
       this.interval = setInterval(() => {
         this.getChannels();
       }, 500);
