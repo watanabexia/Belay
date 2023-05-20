@@ -35,7 +35,8 @@
             document.getElementById('passwordError').innerHTML = '';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            this.$router.push('/');
+            console.log(this.$route.query.redirect);
+            this.$router.push(this.$route.query.redirect || '/');
           })
           .catch((error) => {
             if (error.response.status === 401) {

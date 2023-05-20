@@ -61,7 +61,7 @@ export default {
   },
   created() {
     if (!this.$isApiKeyExistsInCookie()) {
-      this.$router.push("/login");
+      this.$router.push({path: "/login", query: { redirect: this.$route.path }});
     } else {
       this.$emit('update:current_title', 'Profile');
 

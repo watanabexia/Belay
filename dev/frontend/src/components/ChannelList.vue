@@ -93,7 +93,8 @@ export default {
   },
   created() {
     if (!this.$isApiKeyExistsInCookie()) {
-      this.$router.push("/login");
+      console.log("redirecting to login");
+      this.$router.push({path: "/login", query: { redirect: this.$route.path }});
     }
   },
 };

@@ -172,8 +172,6 @@ export default {
     created() {
         if (!this.$isApiKeyExistsInCookie()) {
         } else {
-
-
             this.updateTitle();
             window.addEventListener('resize', this.handleResize);
 
