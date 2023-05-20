@@ -7,7 +7,7 @@
         <div class="pt-3">
           <button type="button" class="btn btn-danger" @click="deleteChannel">Delete Channel</button>
         </div>
-        <div class="row pt-3 messages-column">
+        <div class="row pt-3 messages-column overflow-auto">
           <template v-for="message in messages" >
             <template v-if="message.reply_to==null" >
                 <MessageBox :message="message" />
@@ -28,7 +28,7 @@
             <input type="text" class="form-control" id="reply" placeholder="Reply">
             <button type="button" class="btn btn-primary" @click="sendReply">Send</button>
         </div>
-      <div class="row pt-3 thread-column">
+      <div class="row pt-3 thread-column overflow-auto">
         <template v-for="replyMessage in replyMessages" >
             <MessageBox :message="replyMessage" />
         </template>

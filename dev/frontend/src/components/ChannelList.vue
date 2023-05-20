@@ -4,7 +4,7 @@
     <button class="btn btn-success" @click="createChannel">Create Channel</button>
   </div>
   <!-- Channel List -->
-  <div class="pt-3 channel-list">
+  <div class="pt-3 channel-list overflow-auto">
     <ChannelBanner @click="$event => navigateToChannel(channel)" v-for="channel in channels" :ChannelName="channel.name" :isSelect="channel.id == $route.params.channelId" :unreadCount="channel.unreadCount" />
   </div>
 </template>

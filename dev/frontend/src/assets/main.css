@@ -8,3 +8,15 @@
   font-size: 12px;
   margin-left: 5px;
 }
+
+.messages-column {
+  max-height: 600px;
+}
+
+.thread-column {
+  max-height: 520px;
+}
+
+.channel-list {
+  max-height: 450px;
+}
