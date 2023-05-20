@@ -28,13 +28,14 @@ export default {
         parsedMessage() {
             const imageUrls = this.extractImageUrls(this.message.message);
             this.imageUrls = imageUrls;
+            let parsedMessage = this.message.message;
             for (let i = 0; i < imageUrls.length; i++) {
-                this.message.message = this.message.message.replace(
+                parsedMessage = parsedMessage.replace(
                     imageUrls[i],
                     ""
                 );
             }
-            return this.message.message
+            return parsedMessage
         },
     },
     methods: {

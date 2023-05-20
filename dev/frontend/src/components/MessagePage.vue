@@ -4,19 +4,23 @@
           <input type="text" class="form-control" id="message" placeholder="Message">
           <button type="button" class="btn btn-primary" @click="sendMessage">Send</button>
         </div>
-        <div class="pt-3">
-          <button type="button" class="btn btn-danger" @click="deleteChannel">Delete Channel</button>
-        </div>
         <div class="row pt-3 messages-column overflow-auto">
           <template v-for="message in messages" >
             <template v-if="message.reply_to==null" >
                 <MessageBox :message="message" />
-                <div class="mb-3">
-                    <button v-if="message.reply_count == 0" type="button" class="btn btn-secondary" @click="() => {goToThread(message.id); showThread(message)}">Reply</button>
+                <div class="row mb-3">
+                    <div class="col-2">
+                        <button v-if="message.reply_count == 0" type="button" class="btn btn-secondary" @click="() => {goToThread(message.id); showThread(message)}">Reply</button>
                     <button v-else type="button" class="btn btn-secondary" @click="() => {goToThread(message.id); showThread(message)}">{{message.reply_count}} replies</button>
+                    </div>
+                    <ReactionPane :message="message" />
                 </div>
             </template>
           </template>
+        </div>
+        <div class="row pt-3">
+            <div class="col"></div>
+            <div class="col-3"> <button type="button" class="btn btn-danger" @click="deleteChannel">Delete Channel</button> </div>
         </div>
     </div>
     <div class="col-lg-3" :class="{'d-none':!IsShowThread}">
@@ -38,6 +42,7 @@
 
 <script>
 import MessageBox from "./MessageBox.vue";
+import ReactionPane from "./ReactionPane.vue";
 export default {
     name: "MessagePage",
     data() {
@@ -55,6 +60,9 @@ export default {
             const path = 'channels/' + this.$route.params.channelId + '/messages';
             this.$axios.get(path)
                 .then((res) => {
+                    if (this.messages.length == res.data.length) {
+                        return;
+                    }
                     this.messages = res.data;
                     if (this.messages.length > 0) {
                         let message_id = this.messages[0].id;
@@ -139,6 +147,9 @@ export default {
             const path = '/messages/' + this.threadMessage.id + '/replies';
             this.$axios.get(path)
                 .then((res) => {
+                    if (this.replyMessages.length == res.data.length) {
+                        return;
+                    }
                     this.replyMessages = res.data;
                 })
                 .catch((error) => {
@@ -150,8 +161,9 @@ export default {
         },
     },
     components: {
-        MessageBox,
-    },
+    MessageBox,
+    ReactionPane
+},
     watch: {
         '$route.params.channelId': function() {
             this.updateTitle();

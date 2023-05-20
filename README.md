@@ -27,7 +27,8 @@ Have fun!
 # Attribution
 - `vue.js` + flask SPA development: https://testdriven.io/blog/developing-a-single-page-app-with-flask-and-vuejs/
 - flask backend code reference: https://github.com/UChicagoWebDev/student-ex-6-watanabexia
-
+- Emoji Picker: https://github.com/yass-dev/Emoji-Picker?ref=vuejsexamples.com
+- Vue3 Popover: https://valgeirb.github.io/vue3-popper/
 # 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/n_2yaB5D)
 
