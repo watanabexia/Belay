@@ -1,22 +1,49 @@
 <template>
     <div class="row">
         <h4> {{ message.username }}</h4>
-        <p> {{ message.message }}</p>
+        <p> {{ parsedMessage }}</p>
+        <div v-if="imageUrls.length > 0">
+            <div class="pb-3" v-for="imageUrl in imageUrls">
+                <img class="chatImage" :src="imageUrl" alt="image">
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: "MessageBox",
+    data() {
+        return {
+            imageUrls: [],
+        };
+    },
     props: {
         message: {
             type: Object,
             required: true,
         },
     },
+    computed: {
+        parsedMessage() {
+            const imageUrls = this.extractImageUrls(this.message.message);
+            this.imageUrls = imageUrls;
+            for (let i = 0; i < imageUrls.length; i++) {
+                this.message.message = this.message.message.replace(
+                    imageUrls[i],
+                    ""
+                );
+            }
+            return this.message.message
+        },
+    },
     methods: {
         showThread() {
             this.$emit('showThread');
+        },
+        extractImageUrls(message) {
+            const urlRegex = /(https?:\/\/[^\s]+(?=\.(jpg|jpeg|png|gif))\.\S+)/gi;
+            return message.match(urlRegex) || [];
         },
     },
 };
