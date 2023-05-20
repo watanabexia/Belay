@@ -17,7 +17,7 @@
       <div class="col">
         <Banner @click="home"/>
         <h2 class="p-3">{{ current_title }}</h2>
-        <div class="p-3 menu-bar">
+        <div>
           <button class="btn btn-primary" @click="toggleChannelList" v-if="!showChannelList">Channel List</button>
           <button class="btn btn-primary" @click="toggleChannelList" v-else>Close Channel List</button>
         </div>

@@ -177,6 +177,11 @@ def get_messages(channel_id):
         user = query_db('select * from users where id = ?', (message['user_id'],), one=True)
         message['username'] = user['name']
 
+        reply_count = query_db('select count(*) from messages where reply_to = ?', (message['id'],), one=True)
+        if not reply_count:
+            message['reply_count'] = 0
+        message['reply_count'] = reply_count[0]
+
     return jsonify([dict(message) for message in messages]), 200
 
 @app.route('/api/channels/<int:channel_id>/messages/create', methods=['POST'])
@@ -199,12 +204,22 @@ def reply_message(message_id):
     channel_id = message['channel_id']
     reply_message = request.json.get('message')
     query_db('insert into messages (user_id, channel_id, message, reply_to) values (?, ?, ?, ?)', (user['id'], channel_id, reply_message, message_id))
-    return jsonify({'message': message}), 201
+    return jsonify({}), 201
 
 @app.route('/api/messages/<int:message_id>/replies', methods=['GET'])
 @require_api_key
 def get_replies(message_id):
     replies = query_db('select * from messages where reply_to = ?', (message_id,))
+    if not replies:
+        return jsonify([]), 200
+    
+    replies.sort(key=lambda message: message['id'], reverse=True)
+    replies = [dict(message) for message in replies]
+
+    for message in replies:
+        user = query_db('select * from users where id = ?', (message['user_id'],), one=True)
+        message['username'] = user['name']
+
     return jsonify([dict(reply) for reply in replies]), 200
 
 @app.route('/api/messages/<int:message_id>/reactions/create', methods=['POST'])
