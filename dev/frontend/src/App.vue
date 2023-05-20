@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-lg-3">
         <Banner @click="home"/>
-        <h2 class="p-3">{{ current_title }}</h2>
+        <h2 class="pt-3 pb-3">{{ current_title }}</h2>
         <RouterView name="LeftSidebar" />
       </div>
       <RouterView name="MainContent" @update:current_title="(new_title) => updateTitle(new_title)" />
@@ -14,9 +14,9 @@
   <!-- Narrow Screen Layout -->
   <div class="container-fluid d-lg-none" v-else>
     <div class="row">
-      <div class="col">
+      <div class="col ps-5">
         <Banner @click="home"/>
-        <h2 class="p-3">{{ current_title }}</h2>
+        <h2 class="pt-3 pb-3">{{ current_title }}</h2>
         <div>
           <button class="btn btn-primary" @click="toggleChannelList" v-if="!showChannelList">Channel List</button>
           <button class="btn btn-primary" @click="toggleChannelList" v-else>Close Channel List</button>

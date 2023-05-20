@@ -33,6 +33,8 @@ export default {
         password,
       })
         .then((res) => {
+          document.getElementById('username').value = '';
+          document.getElementById('password').value = '';
           this.$router.push('/');
         })
         .catch((error) => {

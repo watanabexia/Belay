@@ -15,6 +15,7 @@ def get_db():
 
     if db is None:
         db = g._database = sqlite3.connect('db/belay.sqlite3')
+        db.execute('PRAGMA foreign_keys = ON')
         db.row_factory = sqlite3.Row
         setattr(g, '_database', db)
     return db
@@ -141,6 +142,7 @@ def create_channel():
     channel = query_db('select * from channels where name = ?', (channel_name,), one=True)
     users = query_db('select * from users')
     for user in users:
+        print(user['id'], channel['id'])
         query_db('insert into last_read_messages (user_id, channel_id, message_id) values (?, ?, ?)', (user['id'], channel['id'], 0))
 
     return jsonify({'channel_name': channel_name}), 201
@@ -149,6 +151,8 @@ def create_channel():
 @require_api_key
 def get_channels():
     channels = query_db('select * from channels')
+    if not channels:
+        return jsonify([]), 200
     return jsonify([dict(channel) for channel in channels]), 200
 
 @app.route('/api/channels/<int:channel_id>', methods=['GET'])

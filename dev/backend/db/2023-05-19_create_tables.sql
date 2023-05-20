@@ -16,9 +16,9 @@ create table messages (
   user_id INTEGER,
   channel_id INTEGER,
   message TEXT,
-  FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(channel_id) REFERENCES channels(id),
-  FOREIGN KEY(reply_to) REFERENCES messages(id)
+  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY(channel_id) REFERENCES channels(id) ON DELETE CASCADE,
+  FOREIGN KEY(reply_to) REFERENCES messages(id) ON DELETE CASCADE
 );
 
 create table reactions (
@@ -26,8 +26,8 @@ create table reactions (
   message_id INTEGER,
   user_id INTEGER,
   emoji VARCHAR(40),
-  FOREIGN KEY(message_id) REFERENCES messages(id),
-  FOREIGN KEY(user_id) REFERENCES users(id)
+  FOREIGN KEY(message_id) REFERENCES messages(id) ON DELETE CASCADE,
+  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 create table last_read_messages (
@@ -35,7 +35,6 @@ create table last_read_messages (
   channel_id INTEGER,
   message_id INTEGER,
   PRIMARY KEY(user_id, channel_id),
-  FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(channel_id) REFERENCES channels(id),
-  FOREIGN KEY(message_id) REFERENCES messages(id)
+  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY(channel_id) REFERENCES channels(id) ON DELETE CASCADE
 );

@@ -1,10 +1,10 @@
 <template>
-  <div class="input-group p-3">
+  <div class="input-group pt-5 pe-5">
     <input type="text" class="form-control" id="NewChannelName" placeholder="Channel Name">
     <button class="btn btn-success" @click="createChannel">Create Channel</button>
   </div>
   <!-- Channel List -->
-  <div class="p-3 channel-list">
+  <div class="pt-3 channel-list">
     <ChannelBanner @click="$event => navigateToChannel(channel)" v-for="channel in channels" :ChannelName="channel.name" :isSelect="channel.id == $route.params.channelId" :unreadCount="channel.unreadCount" />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-lg">
+    <div class="col-lg" :class="{'d-none':IsShowThread&&!isWideScreen}">
         <div class="input-group pt-5 pe-5">
           <input type="text" class="form-control" id="message" placeholder="Message">
           <button type="button" class="btn btn-primary" @click="sendMessage">Send</button>
@@ -47,6 +47,7 @@ export default {
           messageInterval: null,
           threadMessage: null,
           IsShowThread: false,
+          isWideScreen: window.innerWidth > 992,
         };
     },
     methods: {
@@ -138,6 +139,9 @@ export default {
                     console.error(error);
                 });
         },
+        handleResize() {
+            this.isWideScreen = window.innerWidth > 992;
+        },
     },
     components: {
         MessageBox,
@@ -163,6 +167,7 @@ export default {
         if (!this.$isApiKeyExistsInCookie()) {
         } else {
             this.updateTitle();
+            window.addEventListener('resize', this.handleResize);
         }
     },
 };

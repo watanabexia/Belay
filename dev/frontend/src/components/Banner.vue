@@ -1,5 +1,5 @@
 <template>
-<div class="p-3">
+<div class="pt-3">
     <h1 class="display-1">Belay</h1>
 </div>
 </template>
