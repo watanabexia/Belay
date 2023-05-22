@@ -27,7 +27,9 @@
     <div class="pt-5 pb-3">
         <button type="button" class="btn btn-secondary" @click="hideThread">Close Thread</button>
     </div>
-      <MessageBox v-if="threadMessage != null" :message="threadMessage" />
+        <div class="replyto-column pb-3">
+            <MessageBox v-if="threadMessage != null" :message="threadMessage" style="overflow-y: auto; max-height: 200px;"/>
+        </div>
         <div class="input-group pe-3">
             <input type="text" class="form-control" id="reply" placeholder="Reply">
             <button type="button" class="btn btn-primary" @click="sendReply">Send</button>
@@ -35,6 +37,9 @@
       <div class="row pt-3 thread-column overflow-auto">
         <template v-for="replyMessage in replyMessages" >
             <MessageBox :message="replyMessage" />
+            <div class="row mb-3">
+                <ReactionPane :message="replyMessage" />
+            </div>
         </template>
       </div>
     </div>
@@ -147,9 +152,6 @@ export default {
             const path = '/messages/' + this.threadMessage.id + '/replies';
             this.$axios.get(path)
                 .then((res) => {
-                    if (this.replyMessages.length == res.data.length) {
-                        return;
-                    }
                     this.replyMessages = res.data;
                 })
                 .catch((error) => {

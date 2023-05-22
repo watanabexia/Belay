@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row message-box">
         <h4> {{ message.username }}</h4>
         <p> {{ parsedMessage }}</p>
         <div v-if="imageUrls.length > 0">

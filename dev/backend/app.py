@@ -245,13 +245,26 @@ def create_reaction(message_id):
     api_key = request.cookies.get('api_key')
     user = query_db('select * from users where api_key = ?', (api_key,), one=True)
     emoji = request.json.get('emoji')
-    query_db('insert into reactions (user_id, message_id, emoji) values (?, ?, ?)', (user['id'], message_id, emoji))
+    try:
+        query_db('insert into reactions (user_id, message_id, emoji) values (?, ?, ?)', (user['id'], message_id, emoji))
+    except:
+        query_db('delete from reactions where user_id = ? and message_id = ? and emoji = ?', (user['id'], message_id, emoji))
+        
     return jsonify({'emoji': emoji}), 201
 
 @app.route('/api/messages/<int:message_id>/reactions', methods=['GET'])
 @require_api_key
 def get_reactions(message_id):
     reactions = query_db('select * from reactions where message_id = ?', (message_id,))
+    if not reactions:
+        return jsonify([]), 200
+    
+    reactions = [dict(reaction) for reaction in reactions]
+
+    for reaction in reactions:
+        user = query_db('select * from users where id = ?', (reaction['user_id'],), one=True)
+        reaction['username'] = user['name']
+    
     return jsonify([dict(reaction) for reaction in reactions]), 200
 
 # Last Read

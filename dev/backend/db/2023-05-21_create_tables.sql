@@ -22,10 +22,10 @@ create table messages (
 );
 
 create table reactions (
-  id INTEGER PRIMARY KEY,
   message_id INTEGER,
   user_id INTEGER,
   emoji VARCHAR(40),
+  PRIMARY KEY(message_id, user_id, emoji),
   FOREIGN KEY(message_id) REFERENCES messages(id) ON DELETE CASCADE,
   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
