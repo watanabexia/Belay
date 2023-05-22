@@ -65,9 +65,6 @@ export default {
             const path = 'channels/' + this.$route.params.channelId + '/messages';
             this.$axios.get(path)
                 .then((res) => {
-                    if (this.messages.length == res.data.length) {
-                        return;
-                    }
                     this.messages = res.data;
                     if (this.messages.length > 0) {
                         let message_id = this.messages[0].id;
